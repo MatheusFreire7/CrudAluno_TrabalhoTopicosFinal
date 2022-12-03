@@ -1,5 +1,2 @@
 ﻿  CrudAluno.cpp
-C:\Users\u21251\Documents\crudAluno.cpp\CrudAluno.cpp(171,53): warning C4267: '=': conversão de 'size_t' para 'int', possível perda de dados
-C:\Users\u21251\Documents\crudAluno.cpp\CrudAluno.cpp(194,51): warning C4267: '=': conversão de 'size_t' para 'int', possível perda de dados
-C:\Users\u21251\Documents\crudAluno.cpp\CrudAluno.cpp(184,9): warning C4101: 'i': variável local não referenciada
-  crudAluno.cpp.vcxproj -> C:\Users\u21251\Documents\crudAluno.cpp\x64\Debug\crudAluno.cpp.exe
+  crudAluno.cpp.vcxproj -> C:\Users\User\Documents\GitHub\CrudAluno_TrabalhoTopicosFinal\x64\Debug\crudAluno.cpp.exe

@@ -1,8 +1,9 @@
 #include "CrudAluno.h"
-#include <iostream>   // ENTRADA E SAÍDA PADRÃO
+#include <iostream>
+#include <fstream>
 #include <cstring>    // PARA USAR strcpy() e strcmp()
-#include <fstream>    // MANIPULAR ARQUIVOS
 #include <string.h>
+using namespace std;
 #pragma warning(disable:4996) //Para desabilitar o erro 4996
 
 struct Aluno
@@ -11,6 +12,7 @@ struct Aluno
     char nome[31];
     int idade;
 };
+
 
 int quantosAlunos = 0;
 
@@ -31,37 +33,31 @@ void quantidadeAlunosCadastrados()
 
 void incluirAluno()
 {
-    int ra;
-    char nome[31];
-    int idade;
-    std::cout << "Digite o Ra do aluno\n";
-    std::cin >> ra;                                                   
-    std::cin.ignore(80, '\n');// LIMPA BUFFER DO TECLADO
-    std::cout << "Digite o nome do aluno\n";
-    std::cin >> nome;
-    std::cin.ignore(80, '\n');// LIMPA BUFFER DO TECLADO
-    std::cout << "Digite a idade do aluno\n";
-    std::cin >> idade;
-    std::cin.ignore(80, '\n');// LIMPA BUFFER DO TECLADO
+    ofstream arq("aluno.dat", ios::binary | ios::app);
     Aluno aluno;
-    aluno = {ra,"nome",idade};
-    int posicao = 0;
-    FILE* PtrAluno = fopen("Alunos.dat", "ab");
-    fflush(stdin);
-   
-    //posicao = buscaBinariaAluno(aluno.ra);
-
-    if(posicao == 0) // se posição = 0 quer dizer que encontramos o registro de aluno
+    if (!arq)
     {
-       //std::cout << "Registro de aluno já registrado";
-       printf("Registro de aluno registrado");
+        std::cout << "Arquivo não pode ser aberto";
     }
     else
     {
-       fwrite(&aluno, sizeof(Aluno), 1, PtrAluno); //Incluimos o aluno no arquivo binário de alunos
-       quantosAlunos++; //Incremnetamos +1 ao contador de aluno, após a inclusão
+        char ch;
+        cout << "Voce quer digitar mais registros aperte s para sim: ";
+        std::cin >> ch;  // LEITURA DA OPÇÃO DESEJADA
+        while (ch == 's')
+        {
+            cout << "\n Digite o Ra : ";
+            cin >> aluno.ra;
+            cout << "\n Digite o Nome : ";
+            cin >> aluno.nome;
+            cout << "\n Digite a idade : ";
+            cin >> aluno.idade;
+            arq.write((char*)&aluno, sizeof(aluno));
+            cout << "Voce quer digitar mais registros aperte s para sim: ";
+            std::cin >> ch;  // LEITURA DA OPÇÃO DESEJADA
+        }
+        arq.close();
     }
-    fclose(PtrAluno);
 }
 
 void excluirAluno()
@@ -100,101 +96,101 @@ void excluirAluno()
 
 void alterarAluno()
 {
-    int ra;
-    char nome[31];
-    int idade;
-    std::cout << "Digite o Ra do aluno\n";
-    std::cin >> ra;
-    std::cin.ignore(80, '\n');// LIMPA BUFFER DO TECLADO
-    std::cout << "Digite o nome do aluno\n";
-    std::cin >> nome;
-    std::cin.ignore(80, '\n');// LIMPA BUFFER DO TECLADO
-    std::cout << "Digite a idade do aluno\n";
-    std::cin >> idade;
-    std::cin.ignore(80, '\n');// LIMPA BUFFER DO TECLADO
+    fstream iof("aluno.dat", ios::binary | ios::in | ios::out);
+    iof.seekg(0);
     Aluno aluno;
-    aluno = { ra,"nome",idade };
-    int posicao = 0;
-    FILE* PtrAluno = fopen("Alunos.dat", "ab");
-    fflush(stdin);
-    fread(&aluno, sizeof(Aluno), 1, PtrAluno);
-
-    if (feof(PtrAluno))
+    bool achou = false;
+    if (!iof)
     {
-        printf("Nenhum registro cadastrado!");
+        cout << "Arquivo não foi possível ser aberto";
     }
     else
     {
-        fflush(stdin);
-        //posicao = buscaBinariaAluno(aluno.ra);
-
-        if (posicao != 0)
+        int ra;
+        int flag = 1;
+        cout << "Digite o Ra do Aluno para altera-lo:";
+        cin >> ra;
+        cout << "Ra \tNome\tIdade\t\n";
+        while (iof.read((char*)&aluno, sizeof(aluno)) && achou == false)
         {
-            printf("Cadastre um aluno primeiro, para poder alterar");
+            if (aluno.ra == ra)
+            {
+                cout << "Registro encontrado: \n";
+                cout << aluno.ra << "\t";
+                cout << aluno.nome << "\t";
+                cout << aluno.idade << endl;
+                cout << "\n";
+                achou = true;
+                cout << "Digite o novo aluno para alterar: \n";
+                cout << "Ra: "; cin >> aluno.ra;
+                cout << "Nome: "; cin >> aluno.nome;
+                cout << "Idade: "; cin >> aluno.idade;
+                iof.seekp(sizeof(aluno),ios::cur);
+                //iof.seekg(sizeof(aluno), ios::cur);
+                iof.write((char*)&aluno, sizeof(aluno));
+            }
         }
-        else
-        {
-            fseek(PtrAluno, posicao, 0);
-            fwrite(&aluno, sizeof(Aluno), 1, PtrAluno);
-            printf("Registro atualizado corretamente!");
-        }
+        if (achou == false)
+            cout << "Registro não encontrado: \n";
+        iof.close();
     }
-    fclose(PtrAluno);
 }
 
-int buscaBinariaAluno() //Busca o aluno pelo seu Ra, retornrá 0 se não encontrar o aluno
+void buscaAluno() //Busca o aluno pelo seu Ra, retornrá 0 se não encontrar o aluno
 {
-    //Aluno aluno;
-    //int Inicio = 0, Meio, Fim;
-    //fseek(aluno, 0, 2);
-    //Fim = ftell(aluno) / sizeof(Aluno) - 1;  // Fim = QtdedeRegistros - 1
-    //Meio = Fim / 2;
-    //fseek(aluno, Meio * sizeof(Aluno), 0);
-    //fread(&RegM, sizeof(Aluno), 1, aluno);
-    return 0;
+    bool achou = false;
+    Aluno aluno;
+    ifstream ifs("aluno.dat", ios::binary);
+    if (!ifs)
+    {
+        cout << "Arquivo não foi possível ser aberto";
+    }
+    else
+    {
+        int ra;
+        int flag = 1;
+        cout << "Digite o Ra para bucar o Aluno: ";
+        cin >> ra;
+        while (ifs.read((char*)&aluno, sizeof(aluno)))
+        {
+            if (aluno.ra == ra)
+            {
+                cout << "Registro encontrado: \n";
+                cout << aluno.ra << "\t";
+                cout << aluno.nome << "\t";
+                cout << aluno.idade << endl;
+                cout << "\n";
+                achou = true;
+            }
+        }
+        if(achou == false)
+            cout << "Registro não encontrado: \n";
+        ifs.close();
+    }
 
 }
 
 void lerAquivoAlunos()
 {
-    FILE* arq;
-    double Vet[100];
-    int result;
-    int i;
-    // Abre um arquivo BINÁRIO para LEITURA
-    arq = fopen("Alunos.dat", "rb");
-    if (arq == NULL)  // Se houve erro na abertura
+    ifstream arq("aluno.dat", ios::binary | ios::app);
+    Aluno aluno;
+    if (!arq)
     {
-        printf("Problemas na abertura do arquivo\n");
-        return;
+        std::cout << "Arquivo não pode ser aberto";
     }
-    result = fread(&Vet[0], sizeof(Aluno), 100, arq);
-    printf("Numero de elementos lidos: %d\n", result);
-
-    for (i = 0; i < result; i++)
-        printf("%lf\n", Vet[i]);
-
-    fclose(arq);
+    else
+    {
+        arq.read((char*)&aluno, sizeof(aluno));
+        cout << "Ra :\t" << aluno.ra << endl;
+        cout << "Nome :\t" << aluno.nome << endl;
+        cout << "Idade :\t" << aluno.idade << endl;
+        cout << "\n";
+        arq.close();
+    }
 }
 
 void gravarArquivoAlunos()
 {
-    FILE* arq;
-    int result;
-    int i;
-    Aluno aluno;
-
-    arq = fopen("Alunos.dat", "wb"); // Cria um arquivo binário para gravação
-
-    if (arq == NULL) // Se não conseguiu criar
-    {
-        printf("Problemas na CRIACAO do arquivo\n");
-        return;
-    }
-    result = fwrite(&aluno, sizeof(Aluno), 0, arq);
-
-    printf("Numero de elementos gravados: %d", result);
-    fclose(arq);
 }
 
 
@@ -218,14 +214,36 @@ short menu(void)  // MENU PRINCIPAL COM TODAS AS OPÇÕES
 
 int main()
 {
+    Aluno aluno;
+
+	ifstream ifs("aluno.dat", ios::binary);
+	if (!ifs)
+	{
+		cout << "Arquivo não foi possível ser aberto";
+	}
+	else
+	{
+        cout << "Registros de alunos lidos: \n";
+		cout << "Ra \tNome\tIdade\t\n";
+		while (ifs.read((char*)&aluno, sizeof(aluno)))
+		{
+			cout << aluno.ra << "\t";
+			cout << aluno.nome << "\t";
+			cout << aluno.idade << endl;
+		}
+        cout << "\n";
+		ifs.close();
+	}
+    
+
     short opcao;// ARMAZENA A OPCAO DO MENU
 
     do {
         opcao = menu(); // menu() RETORNA UMA OPCAO TRATADA VALIDA
-        switch (opcao) {                                          
+        switch (opcao) {
         case 1: incluirAluno();break;
         case 2: excluirAluno(); break;
-        case 3: buscaBinariaAluno(); break;
+        case 3: buscaAluno(); break;
         case 4: quantidadeAlunosCadastrados();break;
         case 5: alterarAluno(); break;
         }
