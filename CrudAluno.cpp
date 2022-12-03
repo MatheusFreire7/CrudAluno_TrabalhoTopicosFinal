@@ -1,7 +1,9 @@
 #include "CrudAluno.h"
 #include <iostream>
 #include <fstream>
-#include <cstring>    // PARA USAR strcpy() e strcmp()
+#include <sqltypes.h>
+#include <sql.h>
+#include <sqlext.h>
 #include <string.h>
 #include<stdio.h>
 using namespace std;
@@ -14,6 +16,12 @@ struct Aluno
     int idade;
 };
 
+void showSQLError(unsigned int handleType, const SQLHANDLE& handle) {
+    SQLCHAR SQLState[1024];
+    SQLCHAR message[1024];
+    if (SQL_SUCCESS == SQLGetDiagRec(handleType, handle, 1, SQLState, NULL, message, 1024, NULL))
+        cout << "SQL driver menssagem: " << message << "\nSQL state: " << SQLState << "." << endl;
+}
 
 int quantosAlunos = 0;
 
@@ -86,11 +94,11 @@ void excluirAluno()
                 ofs.write((char*)&aluno, sizeof(aluno));
             }
         }
-        quantosAlunos--;
         ifs.close();
         ofs.close();
         remove("aluno.dat");
         rename("temp.dat", "aluno.dat");
+        quantosAlunos--;
     }
 
 }
@@ -245,6 +253,31 @@ short menu(void)  // MENU PRINCIPAL COM TODAS AS OPÇÕES
 
 int main()
 {
+    SQLHANDLE SQLEnvHandle = NULL;
+    SQLHANDLE SQLConnectionHandle = NULL;
+    SQLHANDLE SQLStatementHandle = NULL;
+    SQLRETURN retCode = 0;
+    char SQLQuerry[] = "SELECT * FROM Aluno";
+
+    do {
+        if (SQL_SUCCESS != SQLAllocHandle(SQL_HANDLE_ENV, SQL_NULL_HANDLE, &SQLEnvHandle))
+            break;
+
+        if(SQL_SUCCESS != SQLSetEnvAttr(SQLEnvHandle, SQL_ATTR_ODBC_VERSION, (SQLPOINTER)SQL_OV_ODBC3,0))
+            break;
+
+        if (SQL_SUCCESS != SQLAllocHandle(SQL_HANDLE_DBC, SQLEnvHandle, &SQLConnectionHandle))
+            break;
+
+        if (SQL_SUCCESS != SQLSetConnectAttr(SQLConnectionHandle, SQL_LOGIN_TIMEOUT, (SQLPOINTER)5, 0))
+            break;
+
+        SQLCHAR retConString[1024];
+        //String de Conexão com SQL SERVER
+        SQLDriverConnect(SQLConnectionHandle, NULL, (SQLCHAR*)"DRIVER={SQL Server}; SERVER=localhost, 1433; DATABASE=myDB; UID=myID; PWD=myPW;", SQL_NTS, retConString, 1024, NULL, SQL_DRIVER_NOPROMPT);
+
+    } while (false);
+
     Aluno aluno;
 
 	ifstream ifs("aluno.dat", ios::binary);
