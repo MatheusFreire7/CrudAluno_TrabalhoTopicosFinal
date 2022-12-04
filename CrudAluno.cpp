@@ -7,7 +7,7 @@
 #include <string.h>
 #include<stdio.h>
 using namespace std;
-#pragma warning(disable:4996) //Para desabilitar o erro 4996
+#pragma warning(disable:4996) //Para desabilitar o erro 4996 de alerta do windowns
 
 struct Aluno
 {
@@ -52,8 +52,18 @@ void incluirAluno()
     }
     else
     {
+        cout << "\n Digite o Ra : ";
+        cin >> aluno.ra;
+        cout << "\n Digite o Nome : ";
+        cin >> aluno.nome;
+        cout << "\n Digite a idade : ";
+        cin >> aluno.idade;
+        arq.write((char*)&aluno, sizeof(aluno));
+        quantosAlunos++;
+
+
         char ch;
-        cout << "Voce quer digitar mais registros aperte s para sim: ";
+        cout << "Voce quer incluir mais registros aperte s para sim: ";
         std::cin >> ch;  // LEITURA DA OPÇÃO DESEJADA
         while (ch == 's')
         {
@@ -92,6 +102,10 @@ void excluirAluno()
             if (aluno.ra != ra)
             {
                 ofs.write((char*)&aluno, sizeof(aluno));
+            }
+            if (aluno.ra == ra)
+            {
+                cout << "Excluimos com sucesso o Aluno \n\n";
             }
         }
         ifs.close();
@@ -196,7 +210,7 @@ void buscaAluno() //Busca o aluno pelo seu Ra, retornrá 0 se não encontrar o alu
         {
             if (aluno.ra == ra)
             {
-                cout << "Registro encontrado: \n";
+                cout << "Aluno encontrado: \n";
                 cout << aluno.ra << "\t";
                 cout << aluno.nome << "\t";
                 cout << aluno.idade << endl;
@@ -206,7 +220,7 @@ void buscaAluno() //Busca o aluno pelo seu Ra, retornrá 0 se não encontrar o alu
         }
         if (achou == false)
         {
-            cout << "Registro não encontrado: \n\n";
+            cout << "Aluno não encontrado: \n\n";
         }
         ifs.close();
     }
@@ -227,7 +241,7 @@ void lerAquivoAlunos()
         cout << "Ra :\t" << aluno.ra << endl;
         cout << "Nome :\t" << aluno.nome << endl;
         cout << "Idade :\t" << aluno.idade << endl;
-        cout << "\n";
+        cout << "\n\n";
         arq.close();
     }
 }
@@ -236,17 +250,17 @@ short menu(void)  // MENU PRINCIPAL COM TODAS AS OPÇÕES
 {    
     short opcao;// ARMAZENA A OPCAO DO MENU
     do {
-        std::cout << " Menu Crud\n\n\n";
-        std::cout << " [1] - Cadastrar Aluno.\n\n";
-        std::cout << " [2] - Excluir Aluno.\n\n";
-        std::cout << " [3] - Pesquisar Aluno por Ra.\n\n";
-        std::cout << " [4] - Exibir quantidade de Alunos Cadastrados.\n\n";
-        std::cout << " [5] - Alterar Aluno.\n\n";
-        std::cout << " [6] - Exibir Alunos.\n\n";
-        std::cout << " [0] - Sair.\n\n";
-        std::cout << " Entre a opcao desejada: ";
-        std::cin >> opcao;  // LEITURA DA OPÇÃO DESEJADA
-        std::cin.ignore(80, '\n'); // LIMPA BUFFER DO TECLADO
+       cout << " Menu Crud\n\n\n";
+       cout << " [1] - Cadastrar Aluno.\n\n";
+       cout << " [2] - Excluir Aluno.\n\n";
+       cout << " [3] - Pesquisar Aluno por Ra.\n\n";
+       cout << " [4] - Exibir quantidade de Alunos Cadastrados.\n\n";
+       cout << " [5] - Alterar Aluno.\n\n";
+       cout << " [6] - Exibir Alunos.\n\n";
+       cout << " [0] - Sair.\n\n";
+       cout << " Entre a opcao desejada: ";
+       cin >> opcao;  // LEITURA DA OPÇÃO DESEJADA
+       cin.ignore(80, '\n'); // LIMPA BUFFER DO TECLADO
     } while (opcao < 0 or 6 < opcao); // EVITA OPCÃO INEXISTENTE
     return opcao; // RETORNA O NÚMERO DA OPÇÃO
 }
@@ -274,9 +288,59 @@ int main()
 
     //    SQLCHAR retConString[1024];
     //    //String de Conexão com SQL SERVER
-    //    SQLDriverConnect(SQLConnectionHandle, NULL, (SQLCHAR*)"DRIVER={SQL Server}; SERVER=localhost, 1433; DATABASE=myDB; UID=myID; PWD=myPW;", SQL_NTS, retConString, 1024, NULL, SQL_DRIVER_NOPROMPT);
+    //    switch (SQLDriverConnect(SQLConnectionHandle, NULL, (SQLCHAR*)"DRIVER={SQL Server}; SERVER=localhost, 1433; DATABASE=myDB; UID=myID; PWD=myPW;", SQL_NTS, retConString, 1024, NULL, SQL_DRIVER_NOPROMPT)) 
+    //    {
+    //        case SQL_SUCCESS:
+    //            break;
+    //        case SQL_SUCCESS_WITH_INFO:
+    //            break;
+    //        case SQL_NO_DATA_FOUND:
+    //            showSQLError(SQL_HANDLE_DBC, SQLConnectionHandle);
+    //            retCode = 1;
+    //            break;
+    //        case SQL_INVALID_HANDLE:
+    //            showSQLError(SQL_HANDLE_DBC, SQLConnectionHandle);
+    //            retCode = 1;
+    //            break;
+    //        case SQL_ERROR:
+    //            showSQLError(SQL_HANDLE_DBC, SQLConnectionHandle);
+    //            retCode = 1;
+    //            break;
+
+    //        default:
+    //            break;
+    //    }
+
+    //    if (retCode == -1)
+    //        break;
+
+    //    if (SQL_SUCCESS != SQLAllocHandle(SQL_HANDLE_STMT, SQLConnectionHandle, &SQLStatementHandle))
+    //        break;
+
+    //    if (SQL_SUCCESS != SQLExecDirect(SQLStatementHandle, (SQLCHAR*)SQLQuerry, SQL_NTS)) 
+    //    {
+    //        showSQLError(SQL_HANDLE_STMT, SQLStatementHandle);
+    //        break;
+    //    }
+    //    else
+    //    {
+    //        int ra;
+    //        char nome[31];
+    //        int idade;
+
+    //        while (SQLFetch(SQLStatementHandle) == SQL_SUCCESS)
+    //        {
+    //            SQLGetData(SQLStatementHandle, 1, SQL_C_DEFAULT, &ra, sizeof(ra), NULL);
+    //            SQLGetData(SQLStatementHandle, 2, SQL_C_DEFAULT, &nome, size(nome), NULL);
+    //            SQLGetData(SQLStatementHandle, 3, SQL_C_DEFAULT, &idade, sizeof(idade), NULL);
+    //            cout << ra << " " << nome << " " << idade << endl;
+    //        }
+    //    }
+    //       
 
     //} while (false);
+
+
 
     Aluno aluno;
 
