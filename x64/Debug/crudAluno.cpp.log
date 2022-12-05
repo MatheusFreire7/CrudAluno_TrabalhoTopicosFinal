@@ -1,2 +1,13 @@
 ﻿  CrudAluno.cpp
+C:\Users\User\Documents\GitHub\CrudAluno_TrabalhoTopicosFinal\CrudAluno.cpp(83,35): warning C4267: 'inicializando': conversão de 'size_t' para 'int', possível perda de dados
+C:\Users\User\Documents\GitHub\CrudAluno_TrabalhoTopicosFinal\CrudAluno.cpp(86,31): warning C4311: 'conversão de tipo': truncamento de ponteiro de 'char *' para 'int'
+C:\Users\User\Documents\GitHub\CrudAluno_TrabalhoTopicosFinal\CrudAluno.cpp(86,31): warning C4302: 'conversão de tipo': truncamento de 'char *' para 'int'
+C:\Users\User\Documents\GitHub\CrudAluno_TrabalhoTopicosFinal\CrudAluno.cpp(95,45): warning C4311: 'conversão de tipo': truncamento de ponteiro de 'char *' para 'int'
+C:\Users\User\Documents\GitHub\CrudAluno_TrabalhoTopicosFinal\CrudAluno.cpp(95,45): warning C4302: 'conversão de tipo': truncamento de 'char *' para 'int'
+C:\Users\User\Documents\GitHub\CrudAluno_TrabalhoTopicosFinal\CrudAluno.cpp(119,39): warning C4267: 'inicializando': conversão de 'size_t' para 'int', possível perda de dados
+C:\Users\User\Documents\GitHub\CrudAluno_TrabalhoTopicosFinal\CrudAluno.cpp(122,35): warning C4311: 'conversão de tipo': truncamento de ponteiro de 'char *' para 'int'
+C:\Users\User\Documents\GitHub\CrudAluno_TrabalhoTopicosFinal\CrudAluno.cpp(122,35): warning C4302: 'conversão de tipo': truncamento de 'char *' para 'int'
+C:\Users\User\Documents\GitHub\CrudAluno_TrabalhoTopicosFinal\CrudAluno.cpp(131,49): warning C4311: 'conversão de tipo': truncamento de ponteiro de 'char *' para 'int'
+C:\Users\User\Documents\GitHub\CrudAluno_TrabalhoTopicosFinal\CrudAluno.cpp(131,49): warning C4302: 'conversão de tipo': truncamento de 'char *' para 'int'
+C:\Users\User\Documents\GitHub\CrudAluno_TrabalhoTopicosFinal\CrudAluno.cpp(67): warning C4715: 'buscaAlunoRa': nem todos os caminhos de controle retornam um valor
   crudAluno.cpp.vcxproj -> C:\Users\User\Documents\GitHub\CrudAluno_TrabalhoTopicosFinal\x64\Debug\crudAluno.cpp.exe
