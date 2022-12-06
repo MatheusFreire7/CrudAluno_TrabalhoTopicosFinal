@@ -113,11 +113,11 @@ void incluirAluno()
         else
         {
             std::cout << "\n Digite o Ra : ";
-            cin >> aluno.ra;
+            cin >>ra;
             int tamanhoRa = strlen(ra);
             if (verifcaAtributoIntAluno(tamanhoRa,ra) && tamanhoRa >= 5)
             {
-                aluno.ra = (int)ra;
+                aluno.ra = std::strtol(ra, nullptr, 10);
                 if (buscaAlunoRa(aluno.ra) == false)
                 {
                     std::cout << "\n Digite o Nome : ";
@@ -126,11 +126,11 @@ void incluirAluno()
                     if (verificaNome(tamanhoNome, aluno.nome))
                     {
                         std::cout << "\n Digite a idade : ";
-                        cin >> aluno.idade;
+                        cin >> idade;
                         int tamanhoIdade = strlen(idade);
                         if (verifcaAtributoIntAluno(tamanhoIdade,idade))
                         {
-                            aluno.idade = (int)idade;
+                            aluno.idade = std::strtol(idade, nullptr, 10);
                             arq.write((char*)&aluno, sizeof(aluno));
                             quantosAlunos++;
                         }
@@ -161,25 +161,35 @@ void incluirAluno()
                 int tamanhoRa = strlen(ra);
                 if (verifcaAtributoIntAluno(tamanhoRa, ra) && tamanhoRa >= 5)
                 {
-                    aluno.ra = (int)ra;
+                    aluno.ra = std::strtol(ra, nullptr, 10);;
                     if (buscaAlunoRa(aluno.ra) == false)
                     {
                         std::cout << "\n Digite o Nome : ";
                         cin >> aluno.nome;
-                        std::cout << "\n Digite a idade : ";
-                        cin >> idade;
-                        int tamanhoIdade = strlen(idade);
-                        if (verifcaAtributoIntAluno(tamanhoIdade,idade))
+                        int tamanhoNome = strlen(aluno.nome);
+                        if (verificaNome(tamanhoNome, aluno.nome))
                         {
-                            aluno.idade = (int)idade;
-                            arq.write((char*)&aluno, sizeof(aluno));
-                            quantosAlunos++;
-                            std::cout << "Voce quer incluir mais registros aperte "s" para sim: ";
-                            std::cin >> ch;  // LEITURA DA OPÇÃO DESEJADA
+                            std::cout << "\n Digite a idade : ";
+                            cin >> idade;
+                            int tamanhoIdade = strlen(idade);
+                            if (verifcaAtributoIntAluno(tamanhoIdade, idade))
+                            {
+                                aluno.idade = std::strtol(idade, nullptr, 10);;
+                                arq.write((char*)&aluno, sizeof(aluno));
+                                quantosAlunos++;
+                                std::cout << "Voce quer incluir mais registros aperte "s" para sim: ";
+                                std::cin >> ch;  // LEITURA DA OPÇÃO DESEJADA
+                            }
+                            else
+                            {
+                                std::cout << "Digite uma idade valida\n\n";
+                                std::cout << "Voce quer incluir mais registros aperte "s" para sim: ";
+                                std::cin >> ch;  // LEITURA DA OPÇÃO DESEJADA
+                            }
                         }
                         else
                         {
-                            std::cout << "Digite uma idade valida\n\n";
+                            std::cout << "Digite um nome valido\n\n";
                             std::cout << "Voce quer incluir mais registros aperte "s" para sim: ";
                             std::cin >> ch;  // LEITURA DA OPÇÃO DESEJADA
                         }
@@ -203,7 +213,7 @@ void incluirAluno()
     }
     catch (exception)
     {
-        throw new exception("Erro na inclusão do Aluno");
+        throw new exception("Erro na inclusão do Aluno\n\n");
     }
    
 }
@@ -212,6 +222,7 @@ void excluirAluno()
 {
     try
     {
+        bool fechouArq = false;
         ifstream ifs("aluno.dat", ios::binary | ios::in);
         ofstream ofs("temp.dat", ios::binary | ios::out);
         Aluno aluno;
@@ -230,15 +241,15 @@ void excluirAluno()
             int tamanhoRa = strlen(ra);
             if (verifcaAtributoIntAluno(tamanhoRa, ra))
             {
-                if (buscaAlunoRa((int)ra) == true)
+                if (buscaAlunoRa(std::strtol(ra, nullptr, 10)) == true)
                 {
                     while (ifs.read((char*)&aluno, sizeof(aluno)))
                     {
-                        if (aluno.ra != (int)ra)
+                        if (aluno.ra != std::strtol(ra, nullptr, 10))
                         {
                             ofs.write((char*)&aluno, sizeof(aluno));
                         }
-                        if (aluno.ra == (int)ra)
+                        if (aluno.ra == std::strtol(ra, nullptr, 10))
                         {
                             std::cout << "Excluimos com sucesso o Aluno \n\n";
                             excluiu = true;
@@ -251,9 +262,12 @@ void excluirAluno()
                     }
                     else
                     {
+                        ifs.close();
+                        ofs.close();
                         std::remove("aluno.dat");
                         std::rename("temp.dat", "aluno.dat");
                         quantosAlunos--;
+                        fechouArq = true;
                     }
                      
                 }
@@ -267,13 +281,17 @@ void excluirAluno()
                 std::cout << "Digite um Ra valido \n\n";
             }
            
-            ifs.close();
-            ofs.close();
+            if (fechouArq == false)
+            {
+                ifs.close();
+                ofs.close();
+            }
+          
         }
     }
     catch (exception)
     {
-        throw new exception("Erro na exclusão do Aluno");
+        throw new exception("Erro na exclusão do Aluno\n\n");
     }
     
 
@@ -283,9 +301,13 @@ void alterarAluno()
 {
     try
     {
+        bool fechouArq = false;
         ifstream ifs("aluno.dat", ios::binary | ios::in);
         ofstream ofs("temp.dat", ios::binary | ios::out);
         Aluno aluno;
+        char ra[10];
+        char novoRa[10];
+        char novaIdade[3];
         bool ehPossivelAlterar = false;
 
         if (!ifs || !ofs)
@@ -294,48 +316,91 @@ void alterarAluno()
         }
         else
         {
-            int ra;
-
+            
             std::cout << "Digite o Ra do Aluno que quer alterar: ";
             cin >> ra;
-            if (buscaAlunoRa(ra) == true)
+            int tamanhoRa = strlen(ra);
+            if (verifcaAtributoIntAluno(tamanhoRa, ra))
             {
-                ehPossivelAlterar = true;
-                while (ifs.read((char*)&aluno, sizeof(aluno)))
+                if (buscaAlunoRa(std::strtol(ra, nullptr, 10)) == true)
                 {
-                    if (aluno.ra != ra)
+                    ehPossivelAlterar = true;
+                    while (ifs.read((char*)&aluno, sizeof(aluno)))
                     {
-                        ofs.write((char*)&aluno, sizeof(aluno));
+                        if (aluno.ra != std::strtol(ra, nullptr, 10))
+                        {
+                            ofs.write((char*)&aluno, sizeof(aluno));
+                        }
                     }
+                }
+                else
+                    std::cout << "Aluno digitado não está cadastrado\n\n";
+            }
+            else
+                std::cout << "Digite um Ra valido para poder alterar\n\n";
+
+
+            //ifs.close();
+            //ofs.close();
+            //std::remove("aluno.dat");
+            //std::rename("temp.dat", "aluno.dat");
+        }
+
+        //ofstream arq("aluno.dat", ios::binary | ios::app);
+      /*  if (!arq)
+        {
+            std::cout << "Arquivo não pode ser aberto";
+        }*/
+        if (ehPossivelAlterar == true)
+        {
+            std::cout << "Digite o novo aluno para alterar: \n\n";
+            std::cout << "\n Digite o Ra : ";
+            cin >> novoRa;
+            int tamanhoNovoRa = strlen(novoRa);
+            if (verifcaAtributoIntAluno(tamanhoNovoRa, novoRa))
+            {
+                aluno.ra = std::strtol(novoRa, nullptr, 10);
+                std::cout << "\n Digite o Nome : ";
+                cin >> aluno.nome;
+                int tamanhoNovoNome = strlen(aluno.nome);
+                if (verificaNome(tamanhoNovoNome, aluno.nome))
+                {
+                    std::cout << "\n Digite a idade : ";
+                    cin >> novaIdade;
+                    int tamanhoNovaIdade = strlen(novaIdade);
+                    if (verifcaAtributoIntAluno(tamanhoNovaIdade, novaIdade))
+                    {
+                        aluno.idade = std::strtol(novaIdade, nullptr, 10);
+                        ofs.write((char*)&aluno, sizeof(aluno));
+                        ifs.close();
+                        ofs.close();
+                        std::remove("aluno.dat");
+                        std::rename("temp.dat", "aluno.dat");
+                        fechouArq = true;
+                        std::cout << "Aluno alterado com sucesso\n\n";
+                    }
+                    else
+                    {
+                        std::cout << "Digite uma idade valida\n\n";
+                    }
+
+                }
+                else
+                {
+                    std::cout << "Digite um nome valido\n\n";
                 }
             }
             else
-                std::cout << "Aluno digitado não está cadastrado";
-
+            {
+                std::cout << "Digite um Ra valido\n\n";
+            }
+        }
+        if (fechouArq == false)
+        {
             ifs.close();
             ofs.close();
-            std::remove("aluno.dat");
-            std::rename("temp.dat", "aluno.dat");
         }
-
-        ofstream arq("aluno.dat", ios::binary | ios::app);
-        if (!arq)
-        {
-            std::cout << "Arquivo não pode ser aberto";
-        }
-        if (ehPossivelAlterar == true)
-        {
-            std::cout << "Digite o novo aluno para alterar: \n";
-            std::cout << "\n Digite o Ra : ";
-            cin >> aluno.ra;
-            std::cout << "\n Digite o Nome : ";
-            cin >> aluno.nome;
-            std::cout << "\n Digite a idade : ";
-            cin >> aluno.idade;
-            arq.write((char*)&aluno, sizeof(aluno));
-            quantosAlunos++;
-        }
-        arq.close();
+       /* arq.close();*/
     }
     catch (exception)
     {
