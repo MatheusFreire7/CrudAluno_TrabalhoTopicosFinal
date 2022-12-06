@@ -133,6 +133,7 @@ void incluirAluno()
 						{
 							aluno.idade = std::strtol(idade, nullptr, 10);
 							arq.write((char*)&aluno, sizeof(aluno));
+							std::cout << "Aluno incluido com Sucesso\n";
 							quantosAlunos++;
 						}
 						else
@@ -178,6 +179,7 @@ void incluirAluno()
 								aluno.idade = std::strtol(idade, nullptr, 10);;
 								arq.write((char*)&aluno, sizeof(aluno));
 								quantosAlunos++;
+								std::cout << "Aluno incluido com Sucesso\n";
 								std::cout << "Voce quer incluir mais registros aperte "s" para sim: ";
 								std::cin >> ch;  // LEITURA DA OPÇÃO DESEJADA
 							}

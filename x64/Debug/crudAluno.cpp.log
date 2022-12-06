@@ -2,14 +2,14 @@
 C:\Users\u21251\Documents\GitHub\CrudAluno_TrabalhoTopicosFinal\CrudAluno.cpp(118,30): warning C4267: 'inicializando': conversão de 'size_t' para 'int', possível perda de dados
 C:\Users\u21251\Documents\GitHub\CrudAluno_TrabalhoTopicosFinal\CrudAluno.cpp(126,42): warning C4267: 'inicializando': conversão de 'size_t' para 'int', possível perda de dados
 C:\Users\u21251\Documents\GitHub\CrudAluno_TrabalhoTopicosFinal\CrudAluno.cpp(131,39): warning C4267: 'inicializando': conversão de 'size_t' para 'int', possível perda de dados
-C:\Users\u21251\Documents\GitHub\CrudAluno_TrabalhoTopicosFinal\CrudAluno.cpp(162,31): warning C4267: 'inicializando': conversão de 'size_t' para 'int', possível perda de dados
-C:\Users\u21251\Documents\GitHub\CrudAluno_TrabalhoTopicosFinal\CrudAluno.cpp(170,43): warning C4267: 'inicializando': conversão de 'size_t' para 'int', possível perda de dados
-C:\Users\u21251\Documents\GitHub\CrudAluno_TrabalhoTopicosFinal\CrudAluno.cpp(175,40): warning C4267: 'inicializando': conversão de 'size_t' para 'int', possível perda de dados
-C:\Users\u21251\Documents\GitHub\CrudAluno_TrabalhoTopicosFinal\CrudAluno.cpp(242,30): warning C4267: 'inicializando': conversão de 'size_t' para 'int', possível perda de dados
-C:\Users\u21251\Documents\GitHub\CrudAluno_TrabalhoTopicosFinal\CrudAluno.cpp(323,30): warning C4267: 'inicializando': conversão de 'size_t' para 'int', possível perda de dados
-C:\Users\u21251\Documents\GitHub\CrudAluno_TrabalhoTopicosFinal\CrudAluno.cpp(350,38): warning C4267: 'inicializando': conversão de 'size_t' para 'int', possível perda de dados
-C:\Users\u21251\Documents\GitHub\CrudAluno_TrabalhoTopicosFinal\CrudAluno.cpp(356,45): warning C4267: 'inicializando': conversão de 'size_t' para 'int', possível perda de dados
-C:\Users\u21251\Documents\GitHub\CrudAluno_TrabalhoTopicosFinal\CrudAluno.cpp(361,46): warning C4267: 'inicializando': conversão de 'size_t' para 'int', possível perda de dados
-C:\Users\u21251\Documents\GitHub\CrudAluno_TrabalhoTopicosFinal\CrudAluno.cpp(452,30): warning C4267: 'inicializando': conversão de 'size_t' para 'int', possível perda de dados
+C:\Users\u21251\Documents\GitHub\CrudAluno_TrabalhoTopicosFinal\CrudAluno.cpp(163,31): warning C4267: 'inicializando': conversão de 'size_t' para 'int', possível perda de dados
+C:\Users\u21251\Documents\GitHub\CrudAluno_TrabalhoTopicosFinal\CrudAluno.cpp(171,43): warning C4267: 'inicializando': conversão de 'size_t' para 'int', possível perda de dados
+C:\Users\u21251\Documents\GitHub\CrudAluno_TrabalhoTopicosFinal\CrudAluno.cpp(176,40): warning C4267: 'inicializando': conversão de 'size_t' para 'int', possível perda de dados
+C:\Users\u21251\Documents\GitHub\CrudAluno_TrabalhoTopicosFinal\CrudAluno.cpp(244,30): warning C4267: 'inicializando': conversão de 'size_t' para 'int', possível perda de dados
+C:\Users\u21251\Documents\GitHub\CrudAluno_TrabalhoTopicosFinal\CrudAluno.cpp(325,30): warning C4267: 'inicializando': conversão de 'size_t' para 'int', possível perda de dados
+C:\Users\u21251\Documents\GitHub\CrudAluno_TrabalhoTopicosFinal\CrudAluno.cpp(352,38): warning C4267: 'inicializando': conversão de 'size_t' para 'int', possível perda de dados
+C:\Users\u21251\Documents\GitHub\CrudAluno_TrabalhoTopicosFinal\CrudAluno.cpp(358,45): warning C4267: 'inicializando': conversão de 'size_t' para 'int', possível perda de dados
+C:\Users\u21251\Documents\GitHub\CrudAluno_TrabalhoTopicosFinal\CrudAluno.cpp(363,46): warning C4267: 'inicializando': conversão de 'size_t' para 'int', possível perda de dados
+C:\Users\u21251\Documents\GitHub\CrudAluno_TrabalhoTopicosFinal\CrudAluno.cpp(454,30): warning C4267: 'inicializando': conversão de 'size_t' para 'int', possível perda de dados
 C:\Users\u21251\Documents\GitHub\CrudAluno_TrabalhoTopicosFinal\CrudAluno.cpp(69): warning C4715: 'buscaAlunoRa': nem todos os caminhos de controle retornam um valor
   crudAluno.cpp.vcxproj -> C:\Users\u21251\Documents\GitHub\CrudAluno_TrabalhoTopicosFinal\x64\Debug\crudAluno.cpp.exe
