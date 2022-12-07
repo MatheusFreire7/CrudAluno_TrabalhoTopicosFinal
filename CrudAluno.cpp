@@ -133,28 +133,28 @@ void incluirAluno()
 						{
 							aluno.idade = std::strtol(idade, nullptr, 10);
 							arq.write((char*)&aluno, sizeof(aluno));
-							std::cout << "Aluno incluido com Sucesso\n";
+							std::cout << " Aluno incluido com Sucesso\n";
 							quantosAlunos++;
 						}
 						else
-							std::cout << "Digite uma idade válida\n\n";
+							std::cout << " Digite uma idade válida\n\n";
 					}
-					else
-						std::cout << "Digite um nome válido\n\n";
+					else 
+						std::cout << " Digite um nome válido\n\n";
 
 				}
 				else
 				{
-					std::cout << "Aluno já existe\n\n";
+					std::cout << " Aluno já existe\n\n";
 				}
 			}
 			else
 			{
-				std::cout << "Digite um ra válido\n";
+				std::cout << " Digite um ra válido\n";
 			}
 
 			char ch;
-			std::cout << "Voce quer incluir mais registros aperte s para sim: ";
+			std::cout << " Voce quer incluir mais registros aperte s para sim: ";
 			std::cin >> ch;  // LEITURA DA OPÇÃO DESEJADA
 			while (ch == 's')
 			{
@@ -179,35 +179,35 @@ void incluirAluno()
 								aluno.idade = std::strtol(idade, nullptr, 10);;
 								arq.write((char*)&aluno, sizeof(aluno));
 								quantosAlunos++;
-								std::cout << "Aluno incluido com Sucesso\n";
-								std::cout << "Voce quer incluir mais registros aperte "s" para sim: ";
+								std::cout << " Aluno incluido com Sucesso\n";
+								std::cout << " Voce quer incluir mais registros aperte "s" para sim: ";
 								std::cin >> ch;  // LEITURA DA OPÇÃO DESEJADA
 							}
 							else
 							{
-								std::cout << "Digite uma idade válida\n\n";
-								std::cout << "Voce quer incluir mais registros aperte "s" para sim: ";
+								std::cout << " Digite uma idade válida\n\n";
+								std::cout << " Voce quer incluir mais registros aperte "s" para sim: ";
 								std::cin >> ch;  // LEITURA DA OPÇÃO DESEJADA
 							}
 						}
 						else
 						{
-							std::cout << "Digite um nome válido\n\n";
-							std::cout << "Voce quer incluir mais registros aperte "s" para sim: ";
+							std::cout << " Digite um nome válido\n\n";
+							std::cout << " Voce quer incluir mais registros aperte "s" para sim: ";
 							std::cin >> ch;  // LEITURA DA OPÇÃO DESEJADA
 						}
 					}
 					else
 					{
-						std::cout << "Aluno já existe \n\n";
-						std::cout << "Voce quer incluir mais registros aperte "s" para sim: ";
+						std::cout << " Aluno já existe \n\n";
+						std::cout << " Voce quer incluir mais registros aperte "s" para sim: ";
 						std::cin >> ch;  // LEITURA DA OPÇÃO DESEJADA
 					}
 				}
 				else
 				{
-					std::cout << "Digite um ra válido\n";
-					std::cout << "Voce quer incluir mais registros aperte "s" para sim: ";
+					std::cout << " Digite um ra válido\n";
+					std::cout << " Voce quer incluir mais registros aperte "s" para sim: ";
 					std::cin >> ch;  // LEITURA DA OPÇÃO DESEJADA
 				}
 			}
@@ -216,7 +216,7 @@ void incluirAluno()
 	}
 	catch (exception)
 	{
-		throw new exception("Erro na inclusão do Aluno\n\n");
+		throw new exception(" Erro na inclusão do Aluno\n\n");
 	}
 
 }
@@ -233,13 +233,13 @@ void excluirAluno()
 
 		if (!ifs || !ofs)
 		{
-			std::cout << "Arquivo não foi possível ser aberto";
+			std::cout << " Arquivo não foi possível ser aberto";
 		}
 		else
 		{
 			char ra[10];
 
-			std::cout << "Digite o Ra para excluir o Aluno: ";
+			std::cout << " Digite o Ra para excluir o Aluno: ";
 			cin >> ra;
 			int tamanhoRa = strlen(ra);
 			if (verifcaAtributoIntAluno(tamanhoRa, ra))
@@ -254,7 +254,7 @@ void excluirAluno()
 						}
 						if (aluno.ra == std::strtol(ra, nullptr, 10))
 						{
-							std::cout << "Excluimos com sucesso o Aluno \n\n";
+							std::cout << " Excluimos com sucesso o Aluno \n\n";
 							quantosAlunos--;
 							excluiu = true;
 						}
@@ -262,7 +262,7 @@ void excluirAluno()
 
 					if (excluiu == false)
 					{
-						std::cout << "Não conseguimos excluir o Aluno\n\n";
+						std::cout << " Não conseguimos excluir o Aluno\n\n";
 					}
 					else
 					{
@@ -276,12 +276,12 @@ void excluirAluno()
 				}
 				else
 				{
-					std::cout << "Aluno digitado não está cadastrado \n\n";
+					std::cout << " Aluno digitado não está cadastrado \n\n";
 				}
 			}
 			else
 			{
-				std::cout << "Digite um Ra válido \n\n";
+				std::cout << " Digite um Ra válido \n\n";
 			}
 
 			if (fechouArq == false)
@@ -294,7 +294,7 @@ void excluirAluno()
 	}
 	catch (exception)
 	{
-		throw new exception("Erro na exclusão do Aluno\n\n");
+		throw new exception(" Erro na exclusão do Aluno\n\n");
 	}
 
 
@@ -315,12 +315,12 @@ void alterarAluno()
 
 		if (!ifs || !ofs)
 		{
-			std::cout << "Arquivo não foi possível ser aberto";
+			std::cout << " Arquivo não foi possível ser aberto";
 		}
 		else
 		{
 
-			std::cout << "Digite o Ra do Aluno que quer alterar: ";
+			std::cout << " Digite o Ra do Aluno que quer alterar: ";
 			cin >> ra;
 			int tamanhoRa = strlen(ra);
 			if (verifcaAtributoIntAluno(tamanhoRa, ra))
@@ -337,16 +337,16 @@ void alterarAluno()
 					}
 				}
 				else
-					std::cout << "Aluno digitado não está cadastrado\n\n";
+					std::cout << " Aluno digitado não está cadastrado\n\n";
 			}
 			else
-				std::cout << "Digite um Ra valido para poder alterar\n\n";
+				std::cout << " Digite um Ra valido para poder alterar\n\n";
 
 		}
 
 		if (ehPossivelAlterar == true)
 		{
-			std::cout << "Digite o novo aluno para alterar: \n\n";
+			std::cout << " Digite o novo aluno para alterar: \n";
 			std::cout << "\n Digite o Ra : ";
 			cin >> novoRa;
 			int tamanhoNovoRa = strlen(novoRa);
@@ -370,22 +370,22 @@ void alterarAluno()
 						std::remove("aluno.dat");
 						std::rename("temp.dat", "aluno.dat");
 						fechouArq = true;
-						std::cout << "Aluno alterado com sucesso\n\n";
+						std::cout << " Aluno alterado com sucesso\n\n";
 					}
 					else
 					{
-						std::cout << "Digite uma idade válida\n\n";
+						std::cout << " Digite uma idade válida\n\n";
 					}
 
 				}
 				else
 				{
-					std::cout << "Digite um nome válido\n\n";
+					std::cout << " Digite um nome válido\n\n";
 				}
 			}
 			else
 			{
-				std::cout << "Digite um Ra válido\n\n";
+				std::cout << " Digite um Ra válido\n\n";
 			}
 		}
 		if (fechouArq == false)
@@ -396,7 +396,7 @@ void alterarAluno()
 	}
 	catch (exception)
 	{
-		throw new exception("Erro na alteração do Aluno");
+		throw new exception(" Erro na alteração do Aluno");
 	}
 
 }
@@ -410,7 +410,7 @@ void exibirAlunos()
 		ifstream ifs("aluno.dat", ios::binary);
 		if (!ifs)
 		{
-			std::cout << "Arquivo não foi possível ser aberto";
+			std::cout << " Arquivo não foi possível ser aberto";
 		}
 		else
 		{
@@ -429,7 +429,7 @@ void exibirAlunos()
 	}
 	catch (exception)
 	{
-		throw new exception("Erro na exibição dos Alunos Cadastrados");
+		throw new exception(" Erro na exibição dos Alunos Cadastrados");
 	}
 
 }
@@ -444,12 +444,12 @@ void buscaAluno() //Busca o aluno pelo seu Ra, retornrá 0 se não encontrar o alu
 		ifstream ifs("aluno.dat", ios::binary);
 		if (!ifs)
 		{
-			std::cout << "Arquivo não foi possível ser aberto";
+			std::cout << " Arquivo não foi possível ser aberto";
 		}
 		else
 		{
 			char ra[10];
-			std::cout << "Digite o Ra para buscar o Aluno: ";
+			std::cout << " Digite o Ra para buscar o Aluno: ";
 			cin >> ra;
 			int tamanhoRa = strlen(ra);
 			if (verifcaAtributoIntAluno(tamanhoRa, ra))
@@ -468,12 +468,12 @@ void buscaAluno() //Busca o aluno pelo seu Ra, retornrá 0 se não encontrar o alu
 				}
 				if (achou == false)
 				{
-					std::cout << "Aluno não encontrado \n\n";
+					std::cout << " Aluno não encontrado \n\n";
 				}
 			}
 			else
 			{
-				std::cout << "Digite um Ra válido \n\n";
+				std::cout << " Digite um Ra válido \n\n";
 			}
 			
 			ifs.close();
@@ -481,7 +481,7 @@ void buscaAluno() //Busca o aluno pelo seu Ra, retornrá 0 se não encontrar o alu
 	}
 	catch (exception)
 	{
-		throw new exception("Erro na Busca dos Alunos Cadastrados");
+		throw new exception(" Erro na Busca dos Alunos Cadastrados");
 	}
 
 
@@ -510,7 +510,7 @@ void lerAquivoAlunos() //Lê o arquivo de Alunos binário
 	}
 	catch (exception)
 	{
-		throw new exception("Erro na leitura do arquivo binário de Alunos");
+		throw new exception(" Erro na leitura do arquivo binário de Alunos");
 	}
 
 }
@@ -518,7 +518,9 @@ void lerAquivoAlunos() //Lê o arquivo de Alunos binário
 short menu(void)  // MENU PRINCIPAL COM TODAS AS OPÇÕES
 {
 	short opcao;// ARMAZENA A OPCAO DO MENU
-	do {
+
+	do 
+	{
 		std::cout << " Menu Crud\n\n";
 		std::cout << " [1] - Cadastrar Aluno.\n\n";
 		std::cout << " [2] - Excluir Aluno.\n\n";
@@ -527,10 +529,12 @@ short menu(void)  // MENU PRINCIPAL COM TODAS AS OPÇÕES
 		std::cout << " [5] - Alterar Aluno.\n\n";
 		std::cout << " [6] - Exibir Alunos.\n\n";
 		std::cout << " [0] - Sair.\n\n";
-		std::cout << " Entre a opcao desejada: ";
+		std::cout << " Digite a opcao desejada: ";
 		cin >> opcao;  // LEITURA DA OPÇÃO DESEJADA
 		cin.ignore(80, '\n'); // LIMPA BUFFER DO TECLADO
-	} while (opcao < 0 or 6 < opcao); // EVITA OPCÃO INEXISTENTE
+
+	}while (opcao < 0 or 6 < opcao); // EVITA OPCÃO INEXISTENTE, ASSIM SÓ ACEITA NUMEROS DECIMAIS
+
 	return opcao; // RETORNA O NÚMERO DA OPÇÃO
 }
 
