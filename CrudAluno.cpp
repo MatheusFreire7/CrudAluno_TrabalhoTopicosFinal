@@ -39,7 +39,7 @@ void setQuantosAlunos(int quantidade)
 void quantidadeAlunosCadastrados()
 {
 	std::cout << "Quantidade de Alunos: ";
-	std::cout << quantosAlunos;
+	std::cout << getQuantosAlunos();
 	std::cout << "\n\n";
 }
 
@@ -154,7 +154,7 @@ void incluirAluno()
 			}
 
 			char ch;
-			std::cout << " Voce quer incluir mais registros aperte s para sim: ";
+			std::cout << " Voce quer incluir mais Alunos aperte s para sim: ";
 			std::cin >> ch;  // LEITURA DA OPÇÃO DESEJADA
 			while (ch == 's')
 			{
@@ -180,34 +180,34 @@ void incluirAluno()
 								arq.write((char*)&aluno, sizeof(aluno));
 								quantosAlunos++;
 								std::cout << " Aluno incluido com Sucesso\n";
-								std::cout << " Voce quer incluir mais registros aperte "s" para sim: ";
+								std::cout << " Voce quer incluir mais Alunos aperte "s" para sim: ";
 								std::cin >> ch;  // LEITURA DA OPÇÃO DESEJADA
 							}
 							else
 							{
 								std::cout << " Digite uma idade válida\n\n";
-								std::cout << " Voce quer incluir mais registros aperte "s" para sim: ";
+								std::cout << " Voce quer incluir mais Alunos aperte "s" para sim: ";
 								std::cin >> ch;  // LEITURA DA OPÇÃO DESEJADA
 							}
 						}
 						else
 						{
 							std::cout << " Digite um nome válido\n\n";
-							std::cout << " Voce quer incluir mais registros aperte "s" para sim: ";
+							std::cout << " Voce quer incluir mais Alunos aperte "s" para sim: ";
 							std::cin >> ch;  // LEITURA DA OPÇÃO DESEJADA
 						}
 					}
 					else
 					{
 						std::cout << " Aluno já existe \n\n";
-						std::cout << " Voce quer incluir mais registros aperte "s" para sim: ";
+						std::cout << " Voce quer incluir mais Alunos aperte "s" para sim: ";
 						std::cin >> ch;  // LEITURA DA OPÇÃO DESEJADA
 					}
 				}
 				else
 				{
 					std::cout << " Digite um ra válido\n";
-					std::cout << " Voce quer incluir mais registros aperte "s" para sim: ";
+					std::cout << " Voce quer incluir mais Alunos aperte "s" para sim: ";
 					std::cin >> ch;  // LEITURA DA OPÇÃO DESEJADA
 				}
 			}
@@ -272,7 +272,6 @@ void excluirAluno()
 						std::rename("temp.dat", "aluno.dat");
 						fechouArq = true;
 					}
-
 				}
 				else
 				{
@@ -288,6 +287,74 @@ void excluirAluno()
 			{
 				ifs.close();
 				ofs.close();
+			}
+
+			char ch;
+			std::cout << " Voce quer excluir mais Alunos aperte s para sim: ";
+			std::cin >> ch;  // LEITURA DA OPÇÃO DESEJADA
+			while (ch == 's')
+			{
+				fechouArq = false;
+				excluiu = false;
+				ifstream ifs("aluno.dat", ios::binary | ios::in);
+				ofstream ofs("temp.dat", ios::binary | ios::out);
+				char ra[10];
+
+				std::cout << " Digite o Ra para excluir o Aluno: ";
+				cin >> ra;
+				int tamanhoRa = strlen(ra);
+				if (verifcaAtributoIntAluno(tamanhoRa, ra))
+				{
+					if (buscaAlunoRa(std::strtol(ra, nullptr, 10)) == true)
+					{
+						while (ifs.read((char*)&aluno, sizeof(aluno)))
+						{
+							if (aluno.ra != std::strtol(ra, nullptr, 10))
+							{
+								ofs.write((char*)&aluno, sizeof(aluno));
+							}
+							if (aluno.ra == std::strtol(ra, nullptr, 10))
+							{
+								std::cout << " Excluimos com sucesso o Aluno \n\n";
+								std::cout << " Voce quer excluir mais Alunos aperte s para sim: ";
+								std::cin >> ch;  // LEITURA DA OPÇÃO DESEJADA
+								quantosAlunos--;
+								excluiu = true;
+							}
+						}
+
+						if (excluiu == false)
+						{
+							std::cout << " Não conseguimos excluir o Aluno\n\n";
+						}
+						else
+						{
+							ifs.close();
+							ofs.close();
+							std::remove("aluno.dat");
+							std::rename("temp.dat", "aluno.dat");
+							fechouArq = true;
+						}
+					}
+					else
+					{
+						std::cout << " Aluno digitado não está cadastrado \n\n";
+						std::cout << " Voce quer excluir mais Alunos aperte s para sim: ";
+						std::cin >> ch;  // LEITURA DA OPÇÃO DESEJADA
+					}
+				}
+				else
+				{
+					std::cout << " Digite um Ra válido \n\n";
+					std::cout << " Voce quer excluir mais Alunos aperte s para sim: ";
+					std::cin >> ch;  // LEITURA DA OPÇÃO DESEJADA
+				}
+
+				if (fechouArq == false)
+				{
+					ifs.close();
+					ofs.close();
+				}
 			}
 
 		}
@@ -393,6 +460,119 @@ void alterarAluno()
 			ifs.close();
 			ofs.close();
 		}
+
+		char ch;
+		std::cout << " Voce quer Alterar mais Alunos aperte s para sim: ";
+		std::cin >> ch;  // LEITURA DA OPÇÃO DESEJADA
+		while (ch == 's')
+		{
+			fechouArq = false;
+			ifstream ifs("aluno.dat", ios::binary | ios::in);
+			ofstream ofs("temp.dat", ios::binary | ios::out);
+			aluno;
+		    ra[10];
+			novoRa[10];
+			novaIdade[3];
+		    ehPossivelAlterar = false;
+
+			if (!ifs || !ofs)
+			{
+				std::cout << " Arquivo não foi possível ser aberto";
+			}
+			else
+			{
+
+				std::cout << " Digite o Ra do Aluno que quer alterar: ";
+				cin >> ra;
+				int tamanhoRa = strlen(ra);
+				if (verifcaAtributoIntAluno(tamanhoRa, ra))
+				{
+					if (buscaAlunoRa(std::strtol(ra, nullptr, 10)) == true)
+					{
+						ehPossivelAlterar = true;
+						while (ifs.read((char*)&aluno, sizeof(aluno)))
+						{
+							if (aluno.ra != std::strtol(ra, nullptr, 10))
+							{
+								ofs.write((char*)&aluno, sizeof(aluno));
+							}
+						}
+					}
+					else
+					{
+						std::cout << " Aluno digitado não está cadastrado\n\n";
+						std::cout << " Voce quer Alterar mais Alunos aperte s para sim: ";
+						std::cin >> ch;  // LEITURA DA OPÇÃO DESEJADA
+					}
+						
+				}
+				else
+				{
+					std::cout << " Digite um Ra valido para poder alterar\n\n";
+					std::cout << " Voce quer Alterar mais Alunos aperte s para sim: ";
+					std::cin >> ch;  // LEITURA DA OPÇÃO DESEJADA
+				}
+					
+			}
+
+			if (ehPossivelAlterar == true)
+			{
+				std::cout << " Digite o novo aluno para alterar: \n";
+				std::cout << "\n Digite o Ra : ";
+				cin >> novoRa;
+				int tamanhoNovoRa = strlen(novoRa);
+				if (verifcaAtributoIntAluno(tamanhoNovoRa, novoRa))
+				{
+					aluno.ra = std::strtol(novoRa, nullptr, 10);
+					std::cout << "\n Digite o Nome : ";
+					cin >> aluno.nome;
+					int tamanhoNovoNome = strlen(aluno.nome);
+					if (verificaNome(tamanhoNovoNome, aluno.nome))
+					{
+						std::cout << "\n Digite a idade : ";
+						cin >> novaIdade;
+						int tamanhoNovaIdade = strlen(novaIdade);
+						if (verifcaAtributoIntAluno(tamanhoNovaIdade, novaIdade))
+						{
+							aluno.idade = std::strtol(novaIdade, nullptr, 10);
+							ofs.write((char*)&aluno, sizeof(aluno));
+							ifs.close();
+							ofs.close();
+							std::remove("aluno.dat");
+							std::rename("temp.dat", "aluno.dat");
+							fechouArq = true;
+							std::cout << " Aluno alterado com sucesso\n\n";
+							std::cout << " Voce quer Alterar mais Alunos aperte s para sim: ";
+							std::cin >> ch;  // LEITURA DA OPÇÃO DESEJADA
+						}
+						else
+						{
+							std::cout << " Digite uma idade válida\n\n";
+							std::cout << " Voce quer Alterar mais Alunos aperte s para sim: ";
+							std::cin >> ch;  // LEITURA DA OPÇÃO DESEJADA
+						}
+
+					}
+					else
+					{
+						std::cout << " Digite um nome válido\n\n";
+						std::cout << " Voce quer Alterar mais Alunos aperte s para sim: ";
+						std::cin >> ch;  // LEITURA DA OPÇÃO DESEJADA
+					}
+				}
+				else
+				{
+					std::cout << " Digite um Ra válido\n\n";
+					std::cout << " Voce quer Alterar mais Alunos aperte s para sim: ";
+					std::cin >> ch;  // LEITURA DA OPÇÃO DESEJADA
+				}
+			}
+			if (fechouArq == false)
+			{
+				ifs.close();
+				ofs.close();
+			}
+		}
 	}
 	catch (exception)
 	{
@@ -478,6 +658,56 @@ void buscaAluno() //Busca o aluno pelo seu Ra, retornrá 0 se não encontrar o alu
 			
 			ifs.close();
 		}
+
+		char ch;
+		std::cout << " Voce quer buscar mais Alunos aperte s para sim: ";
+		std::cin >> ch;  // LEITURA DA OPÇÃO DESEJADA
+		while (ch == 's')
+		{
+			ifstream ifs("aluno.dat", ios::binary);
+			if (!ifs)
+			{
+				std::cout << " Arquivo não foi possível ser aberto";
+			}
+			else
+			{
+				char ra[10];
+				std::cout << " Digite o Ra para buscar o Aluno: ";
+				cin >> ra;
+				int tamanhoRa = strlen(ra);
+				if (verifcaAtributoIntAluno(tamanhoRa, ra))
+				{
+					while (ifs.read((char*)&aluno, sizeof(aluno)))
+					{
+						if (aluno.ra == std::strtol(ra, nullptr, 10))
+						{
+							std::cout << "Aluno encontrado: \n";
+							std::cout << aluno.ra << "\t";
+							std::cout << aluno.nome << "\t";
+							std::cout << aluno.idade << endl;
+							std::cout << "\n";
+							achou = true;
+							std::cout << " Voce quer buscar mais Alunos aperte s para sim: ";
+							std::cin >> ch;  // LEITURA DA OPÇÃO DESEJADA
+						}
+					}
+					if (achou == false)
+					{
+						std::cout << " Aluno não encontrado \n\n";
+						std::cout << " Voce quer buscar mais Alunos aperte s para sim: ";
+						std::cin >> ch;  // LEITURA DA OPÇÃO DESEJADA
+					}
+				}
+				else
+				{
+					std::cout << " Digite um Ra válido \n\n";
+					std::cout << " Voce quer buscar mais Alunos aperte s para sim: ";
+					std::cin >> ch;  // LEITURA DA OPÇÃO DESEJADA
+				}
+
+				ifs.close();
+			}
+		}
 	}
 	catch (exception)
 	{
@@ -525,15 +755,14 @@ short menu(void)  // MENU PRINCIPAL COM TODAS AS OPÇÕES
 		std::cout << " [1] - Cadastrar Aluno.\n\n";
 		std::cout << " [2] - Excluir Aluno.\n\n";
 		std::cout << " [3] - Pesquisar Aluno por Ra.\n\n";
-		std::cout << " [4] - Exibir quantidade de Alunos Cadastrados.\n\n";
-		std::cout << " [5] - Alterar Aluno.\n\n";
-		std::cout << " [6] - Exibir Alunos.\n\n";
+		std::cout << " [4] - Alterar Aluno.\n\n";
+		std::cout << " [5] - Exibir Alunos.\n\n";
 		std::cout << " [0] - Sair.\n\n";
 		std::cout << " Digite a opcao desejada: ";
 		cin >> opcao;  // LEITURA DA OPÇÃO DESEJADA
 		cin.ignore(80, '\n'); // LIMPA BUFFER DO TECLADO
 
-	}while (opcao < 0 or 6 < opcao); // EVITA OPCÃO INEXISTENTE, ASSIM SÓ ACEITA NUMEROS DECIMAIS
+	}while (opcao < 0 or 5 < opcao); // EVITA OPCÃO INEXISTENTE, ASSIM SÓ ACEITA NUMEROS DECIMAIS
 
 	return opcao; // RETORNA O NÚMERO DA OPÇÃO
 }
@@ -647,9 +876,8 @@ int main()
 		case 1: incluirAluno(); break;
 		case 2: excluirAluno(); break;
 		case 3: buscaAluno(); break;
-		case 4: quantidadeAlunosCadastrados(); break;
-		case 5: alterarAluno(); break;
-		case 6: exibirAlunos(); break;
+		case 4: alterarAluno(); break;
+		case 5: exibirAlunos(); break;
 		}
 	} while (opcao);
 
