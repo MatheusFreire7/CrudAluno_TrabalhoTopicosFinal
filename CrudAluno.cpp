@@ -31,12 +31,12 @@ int getQuantosAlunos()
 	return quantosAlunos;
 }
 
-void setQuantosAlunos(int quantidade)
+void setQuantosAlunos(int quantidade) throw()
 {
 	quantosAlunos = quantidade;
 }
 
-void quantidadeAlunosCadastrados()
+void quantidadeAlunosCadastrados() throw()
 {
 	std::cout << "Quantidade de Alunos: ";
 	std::cout << getQuantosAlunos();
@@ -68,7 +68,7 @@ bool buscaAlunoRa(int ra) //Busca o aluno pelo seu Ra, retornrá 0 se não encontr
 
 }
 
-bool verifcaAtributoIntAluno(int tamanho, char atributo[])
+bool verifcaAtributoIntAluno(int tamanho, char atributo[]) throw()
 {
 	bool ehInt = true;
 	for (int i = 0; i < tamanho; ++i)
@@ -84,7 +84,7 @@ bool verifcaAtributoIntAluno(int tamanho, char atributo[])
 
 }
 
-bool verificaNome(int tamanhoNome, char nome[])
+bool verificaNome(int tamanhoNome, char nome[]) throw()
 {
 	bool ehNome = true;
 	for (int i = 0; i < tamanhoNome; ++i)
@@ -154,7 +154,7 @@ void incluirAluno()
 			}
 
 			char ch;
-			std::cout << " Voce quer incluir mais Alunos aperte s para sim: ";
+			std::cout << " \nVoce deseja incluir mais Alunos? Digite S para sim ou qualquer caracter para não: ";
 			std::cin >> ch;  // LEITURA DA OPÇÃO DESEJADA
 			while (ch == 's')
 			{
@@ -180,34 +180,34 @@ void incluirAluno()
 								arq.write((char*)&aluno, sizeof(aluno));
 								quantosAlunos++;
 								std::cout << " Aluno incluido com Sucesso\n";
-								std::cout << " Voce quer incluir mais Alunos aperte "s" para sim: ";
+								std::cout << "\nVoce deseja incluir mais Alunos? Digite S para sim ou qualquer caracter para não: ";
 								std::cin >> ch;  // LEITURA DA OPÇÃO DESEJADA
 							}
 							else
 							{
 								std::cout << " Digite uma idade válida\n\n";
-								std::cout << " Voce quer incluir mais Alunos aperte "s" para sim: ";
+								std::cout << "\nVoce deseja incluir mais Alunos? Digite S para sim ou qualquer caracter para não: ";
 								std::cin >> ch;  // LEITURA DA OPÇÃO DESEJADA
 							}
 						}
 						else
 						{
 							std::cout << " Digite um nome válido\n\n";
-							std::cout << " Voce quer incluir mais Alunos aperte "s" para sim: ";
+							std::cout << "\nVoce deseja incluir mais Alunos? Digite S para sim ou qualquer caracter para não: ";
 							std::cin >> ch;  // LEITURA DA OPÇÃO DESEJADA
 						}
 					}
 					else
 					{
 						std::cout << " Aluno já existe \n\n";
-						std::cout << " Voce quer incluir mais Alunos aperte "s" para sim: ";
+						std::cout << "\nVoce deseja incluir mais Alunos? Digite S para sim ou qualquer caracter para não: ";
 						std::cin >> ch;  // LEITURA DA OPÇÃO DESEJADA
 					}
 				}
 				else
 				{
 					std::cout << " Digite um ra válido\n";
-					std::cout << " Voce quer incluir mais Alunos aperte "s" para sim: ";
+					std::cout << "\nVoce deseja incluir mais Alunos? Digite S para sim ou qualquer caracter para não: ";
 					std::cin >> ch;  // LEITURA DA OPÇÃO DESEJADA
 				}
 			}
@@ -262,7 +262,7 @@ void excluirAluno()
 
 					if (excluiu == false)
 					{
-						std::cout << " Não conseguimos excluir o Aluno\n\n";
+						std::cout << " Não foi possivel excluir o Aluno\n\n";
 					}
 					else
 					{
@@ -290,7 +290,7 @@ void excluirAluno()
 			}
 
 			char ch;
-			std::cout << " Voce quer excluir mais Alunos aperte s para sim: ";
+			std::cout << " \nVoce deseja incluir mais Alunos? Digite S para sim ou qualquer caracter para não: ";
 			std::cin >> ch;  // LEITURA DA OPÇÃO DESEJADA
 			while (ch == 's')
 			{
@@ -315,8 +315,8 @@ void excluirAluno()
 							}
 							if (aluno.ra == std::strtol(ra, nullptr, 10))
 							{
-								std::cout << " Excluimos com sucesso o Aluno \n\n";
-								std::cout << " Voce quer excluir mais Alunos aperte s para sim: ";
+								std::cout << " Aluno excluido com sucesso\n\n";
+								std::cout << "\nVoce deseja excluir mais Alunos? Digite S para sim ou qualquer caracter para não: ";
 								std::cin >> ch;  // LEITURA DA OPÇÃO DESEJADA
 								quantosAlunos--;
 								excluiu = true;
@@ -325,7 +325,7 @@ void excluirAluno()
 
 						if (excluiu == false)
 						{
-							std::cout << " Não conseguimos excluir o Aluno\n\n";
+							std::cout << " Nao foi possivel excluir o Aluno\n\n";
 						}
 						else
 						{
@@ -339,7 +339,7 @@ void excluirAluno()
 					else
 					{
 						std::cout << " Aluno digitado não está cadastrado \n\n";
-						std::cout << " Voce quer excluir mais Alunos aperte s para sim: ";
+						std::cout << "\nVoce deseja excluir mais Alunos aperte s para sim: ";
 						std::cin >> ch;  // LEITURA DA OPÇÃO DESEJADA
 					}
 				}
@@ -462,7 +462,7 @@ void alterarAluno()
 		}
 
 		char ch;
-		std::cout << " Voce quer Alterar mais Alunos aperte s para sim: ";
+		std::cout << "\nVoce deseja alterar mais Alunos? Digite S para sim ou qualquer caracter para não:  ";
 		std::cin >> ch;  // LEITURA DA OPÇÃO DESEJADA
 		while (ch == 's')
 		{
@@ -501,7 +501,7 @@ void alterarAluno()
 					else
 					{
 						std::cout << " Aluno digitado não está cadastrado\n\n";
-						std::cout << " Voce quer Alterar mais Alunos aperte s para sim: ";
+						std::cout << "\nVoce deseja alterar mais Alunos? Digite S para sim ou qualquer caracter para não: ";
 						std::cin >> ch;  // LEITURA DA OPÇÃO DESEJADA
 					}
 						
@@ -509,7 +509,7 @@ void alterarAluno()
 				else
 				{
 					std::cout << " Digite um Ra valido para poder alterar\n\n";
-					std::cout << " Voce quer Alterar mais Alunos aperte s para sim: ";
+					std::cout << "\nVoce deseja alterar mais Alunos? Digite S para sim ou qualquer caracter para não: ";
 					std::cin >> ch;  // LEITURA DA OPÇÃO DESEJADA
 				}
 					
@@ -542,13 +542,13 @@ void alterarAluno()
 							std::rename("temp.dat", "aluno.dat");
 							fechouArq = true;
 							std::cout << " Aluno alterado com sucesso\n\n";
-							std::cout << " Voce quer Alterar mais Alunos aperte s para sim: ";
+							std::cout << "\nVoce deseja alterar mais Alunos? Digite S para sim ou qualquer caracter para não: ";
 							std::cin >> ch;  // LEITURA DA OPÇÃO DESEJADA
 						}
 						else
 						{
 							std::cout << " Digite uma idade válida\n\n";
-							std::cout << " Voce quer Alterar mais Alunos aperte s para sim: ";
+							std::cout << "\nVoce deseja alterar mais Alunos? Digite S para sim ou qualquer caracter para não: ";
 							std::cin >> ch;  // LEITURA DA OPÇÃO DESEJADA
 						}
 
@@ -556,14 +556,14 @@ void alterarAluno()
 					else
 					{
 						std::cout << " Digite um nome válido\n\n";
-						std::cout << " Voce quer Alterar mais Alunos aperte s para sim: ";
+						std::cout << "\nVoce deseja alterar mais Alunos? Digite S para sim ou qualquer caracter para não: ";
 						std::cin >> ch;  // LEITURA DA OPÇÃO DESEJADA
 					}
 				}
 				else
 				{
 					std::cout << " Digite um Ra válido\n\n";
-					std::cout << " Voce quer Alterar mais Alunos aperte s para sim: ";
+					std::cout << "\nVoce deseja alterar mais Alunos? Digite S para sim ou qualquer caracter para não: ";
 					std::cin >> ch;  // LEITURA DA OPÇÃO DESEJADA
 				}
 			}
@@ -660,7 +660,7 @@ void buscaAluno() //Busca o aluno pelo seu Ra, retornrá 0 se não encontrar o alu
 		}
 
 		char ch;
-		std::cout << " Voce quer buscar mais Alunos aperte s para sim: ";
+		std::cout << "\nVoce deseja buscar mais Alunos? Digite S para sim ou qualquer caracter para não: ";
 		std::cin >> ch;  // LEITURA DA OPÇÃO DESEJADA
 		while (ch == 's')
 		{
@@ -687,21 +687,21 @@ void buscaAluno() //Busca o aluno pelo seu Ra, retornrá 0 se não encontrar o alu
 							std::cout << aluno.idade << endl;
 							std::cout << "\n";
 							achou = true;
-							std::cout << " Voce quer buscar mais Alunos aperte s para sim: ";
+							std::cout << " \nVoce deseja buscar mais Alunos? Digite S para sim ou qualquer caracter para não:  ";
 							std::cin >> ch;  // LEITURA DA OPÇÃO DESEJADA
 						}
 					}
 					if (achou == false)
 					{
 						std::cout << " Aluno não encontrado \n\n";
-						std::cout << " Voce quer buscar mais Alunos aperte s para sim: ";
+						std::cout << "\nVoce deseja buscar mais Alunos? Digite S para sim ou qualquer caracter para não: ";
 						std::cin >> ch;  // LEITURA DA OPÇÃO DESEJADA
 					}
 				}
 				else
 				{
 					std::cout << " Digite um Ra válido \n\n";
-					std::cout << " Voce quer buscar mais Alunos aperte s para sim: ";
+					std::cout << "\nVoce deseja buscar mais Alunos? Digite S para sim ou qualquer caracter para não: ";
 					std::cin >> ch;  // LEITURA DA OPÇÃO DESEJADA
 				}
 
@@ -751,7 +751,7 @@ short menu(void)  // MENU PRINCIPAL COM TODAS AS OPÇÕES
 
 	do 
 	{
-		std::cout << " Menu Crud\n\n";
+		std::cout << " \nMenu Crud\n\n";
 		std::cout << " [1] - Cadastrar Aluno.\n\n";
 		std::cout << " [2] - Excluir Aluno.\n\n";
 		std::cout << " [3] - Pesquisar Aluno por Ra.\n\n";
